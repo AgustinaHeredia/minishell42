@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minipwd.c                                          :+:      :+:    :+:   */
+/*   is_absolute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbastien <lbastien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 12:06:21 by agheredi          #+#    #+#             */
-/*   Updated: 2024/03/25 13:36:56 by lbastien         ###   ########.fr       */
+/*   Created: 2024/03/25 12:46:24 by lbastien          #+#    #+#             */
+/*   Updated: 2024/03/25 12:46:45 by lbastien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	mini_pwd(char ***env, int fd_out)
+int	is_absolute(t_command *cmd)
 {
-	char	*pwd;
-
-	pwd = NULL;
-	pwd = getcwd(pwd, sizeof(pwd));
-	if (!pwd)
+	if (cmd->command[0] == '/' || \
+		(cmd->command[0] == '.' && cmd->command[1] == '/'))
 	{
-		pwd = get_var_env("PWD=", *env);
-		ft_putendl_fd(pwd, fd_out);
+		if (path_valid(cmd->command))
+			return (1);
 	}
-	else
-		ft_putendl_fd(pwd, fd_out);
-	free(pwd);
 	return (0);
 }
