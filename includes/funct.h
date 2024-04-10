@@ -6,7 +6,7 @@
 /*   By: lbastien <lbastien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 16:22:23 by lbastien          #+#    #+#             */
-/*   Updated: 2024/03/23 18:41:57 by lbastien         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:46:08 by lbastien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int			is_env_var_valid(char *word);
 char		*get_dir_var(t_command *cmd, char ***env);
 void		export_no_arg(char ***env, char **var_export, int fd_out);
 char		**update_env(char **var_value, t_command *cmd, char ***env, int i);
-int			determine_exit_code(t_state *state, int fd_out);
+int			determine_exit_code(t_state *state, t_command *cmd, int fd_out);
 char		**addexport(char **d_array, char *nwstr);
 
 //utils data
@@ -149,13 +149,13 @@ char		*get_var_env(char *var, char **envp);
 void		ft_executor(t_state *state, char ***env);
 void		make_dup(t_command *cmd, t_state *state);
 void		exec_cmd(t_command *cmd, t_state *state, char ***env);
+void		fork_cmd(t_command *cmd, t_state *state, char ***env);
 void		ft_child(t_command *cmd, char *path, t_state *state, char ***env);
-void		ft_parent(t_command *cmd, int pid, t_state *state);
 void		ft_waitpid(t_state *state);
 void		ft_init_pipes(t_state *state);
 int			assign_pipes(t_command *cmd, t_state *state);
-void		close_open_fds(t_state *state);
-void		ft_execve(t_command *cmd, char *path, t_state *state, char **env);
+void		close_next_fds(t_command *cmd);
+void		close_cmd_fds(t_command *cmd);
 
 //Path
 char		**ft_parse_path(char **envp);
